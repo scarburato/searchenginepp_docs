@@ -1,0 +1,16 @@
+#ScHiFoTeX
+*.aux
+*.log
+*.out
+*.pdf
+*.gz
+*.toc
+*.lof
+*.fls
+*.bbl
+*.blg
+*.fdb_latexmk
+report.blg
+
+### VS Code ###
+.vscode/
