@@ -1,0 +1,24 @@
+Init hyperscan db...
+building scratch...
+building scratch...
+building scratch...
+building scratch...
+Chunk 0 (thread ff) processed in 44.7158s and written in 2.1356s (46s elapsed)
+Chunk 1 (thread fe) processed in 47.3445s and written in 2.4206s (49s elapsed)
+Chunk 2 (thread fd) processed in 46.4158s and written in 2.4048s (48s elapsed)
+Chunk 3 (thread fc) processed in 45.4687s and written in 2.3275s (47s elapsed)
+Chunk 4 (thread ff) processed in 14.2876s and written in 0.9657s (15s elapsed)
+Indices built in 67.1283s
+Built global lexicon from local lexica in 430.707ms
+(thread fe) Built skipping list and sigmas for "data/db_0" (max len = 27) 
+(thread fc) Built skipping list and sigmas for "data/db_2" (max len = 26) 
+(thread ff) Built skipping list and sigmas for "data/db_3" (max len = 27) 
+(thread fd) Built skipping list and sigmas for "data/db_1" (max len = 25) 
+(thread fe) Built skipping list and sigmas for "data/db_4" (max len = 10) 
+Re-built local lexica in 11.9453s	average len = 1.00149
+Processed 8841823 documents in 79.5042s 5 indices generated
+
+real	1m19,815s
+user	4m16,885s
+sys	0m10,968s
+
