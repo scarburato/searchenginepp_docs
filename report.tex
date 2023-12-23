@@ -105,9 +105,9 @@ $\left<	\left< p(s_{b_i}, s_j), {s'}_j \right>, c(d_j)	\right>$; where $p()$ is 
 \paragraph{Complexity}
 For simplicity's sake our implementation makes use of binary search to find in which page a term is stored and a linear scan to find it in the page, giving us a time complexity of 
 $O\left(	|T|\cdot\log(k) + m	\right)$,
-a space complexity of
-$O\left(	|T|\cdot k	\right)$ and
-an I/O complexity of
+a space complexity, with regard to system memory, of
+$O\left(	|T|\cdot k	\right)$
+--- since we only have to keep the heads in memory --- and an I/O complexity of
 $O\left(	1	\right)$, assuming all pages' heads fit in memory.
 
 \subsection{Data}
