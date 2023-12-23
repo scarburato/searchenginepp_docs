@@ -88,9 +88,9 @@ particular key, that is an index term. To achieve this we make use of following:
 \end{itemize}
 
 \paragraph{Structure}
-Let us call $|B|$ the size of disk page, $|T|$ the maximum length off all terms stored, $m$ the maximum number of key-value pairs stored in a page, $k$ the number of pages used to store them all, $s_1 > s_2 > s_3 > \dots$ the terms to store and $d_1, d_2, d_3, \dots$ their data; and $s_{b_1} > s_{b_2} > \dots s_{b_k}$ the terms that appear at the start of each page.
+Let us call $|B|$ the size of a disk page, $|T|$ the maximum length off all terms stored, $m$ the maximum number of key-value pairs stored in a page, $k$ the number of pages used to store them all, $s_1 > s_2 > s_3 > \dots$ the terms to store and $d_1, d_2, d_3, \dots$ their data; and $s_{b_1} > s_{b_2} > \dots > s_{b_k}$ the terms that appear at the start of each page.
 
-The following picture shows our data are organized at high level
+The following picture shows how our data are organized at high level
 
 \begin{figure}[H]
 	\centering
