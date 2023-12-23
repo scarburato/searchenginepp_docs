@@ -97,18 +97,18 @@
 \section{trec\_eval}
 \begin{table}[H]
 	\centering
-	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|}
+	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
 		\hline
-		Metric & \normalfont\textbf{DAAT} & \normalfont\textbf{BMM} \\
+		Metric & \normalfont\textbf{DAAT} & \normalfont\textbf{BMM} & \normalfont\textbf{Chang's} \\
 		\hline
-		mAP & 0.1982 & 0.1709 \\
-		RR & 0.8110 & 0.7141 \\
-		ndcg & 0.3376 & 0.2902 \\
-		ndcg@10 & 0.4750 & 0.4110 \\
-		ndcg@20 & 0.4705 & 0.4013 \\
-		set P & 0.4815 & 0.4065 \\
-		set R & 0.2600 & 0.2315 \\
-		set F & 0.2781 & 0.2411 \\
+		mAP & 0.1982 & 0.1709 & 0.0794 \\
+		RR & 0.8110 & 0.7141 & 0.7285 \\
+		ndcg & 0.3376 & 0.2902 & 0.1681\\
+		ndcg@10 & 0.4750 & 0.4110 & 0.4075 \\
+		ndcg@20 & 0.4705 & 0.4013 & - \\
+		set P & 0.4815 & 0.4065  & 0.5163 \\
+		set R & 0.2600 & 0.2315 & 0.0987 \\
+		set F & 0.2781 & 0.2411 & 0.1437 \\
 		\hline
 	\end{tabular}
 	\caption{trec\_eval for DAAT and BMM}
