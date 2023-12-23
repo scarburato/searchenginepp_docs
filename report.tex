@@ -56,7 +56,7 @@
 \author{
 	\begin{tabular}{lr}
 		Dario Pagani & 585281 \\
-		Franceso "Froffri" Londretti & ????? \\
+		Franceso Londretti & 597086 \\
 		Ricky Marinsalda & 585094
 	\end{tabular}
 }
@@ -125,29 +125,14 @@ The only global lexicon just stores the total number of documents each term appe
 
 \chapter{Benchmarks}
 
-\section{Queries' execution times}
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
-		\hline
-		Algorithm & \normalfont\textbf{AVG [ms]} & \normalfont\textbf{STD DEV [ms]} & \normalfont\textbf{MAX [ms]} \\
-		\hline
-		DAAT & 25.88 & 19.69 & 78.68 \\
-		BMM & 6.67 & 6.29 & 42.48 \\
-		\hline
-	\end{tabular}
-	\caption{Execution times in milliseconds for different algorithms}
-	\label{tab:algorithm_times}
-\end{table}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth]{assets/times_distrib.png}
-	\caption{Distribution of times}
-	\label{fig:time_distribution}
-\end{figure}
 
 \section{trec\_eval}
+For assessing the system's performance, we utilized the TREC Eval tool, which was created by the Text REtrieval Conference (TREC) to establish a standardized method for comparing the efficacy of various search engines.
+
+TREC Eval accepts a collection of search outcomes and relevant documents as input, subsequently employing several evaluation metrics to gauge the search result quality. These metrics encompass reciprocal rank, alongside more sophisticated measures such as mean average precision (MAP) and normalized discounted cumulative gain (NDCG).
+
+The ensuing tables show the outcomes derived from our search engine evaluations, conducted using the queries from the dataset labeled \href{https://msmarco.blob.core.windows.net/msmarcoranking/msmarco-test2020-queries.tsv.gz}{\textit{msmarco-test2020-queries}}.
+
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
@@ -169,9 +154,39 @@ The only global lexicon just stores the total number of documents each term appe
 \end{table}
 
 	\section{Time statistics}
-\lstinputlisting[caption={Indexing program's output: it takes less than 1 minute and 20 seconds to build it}, label={lst:example_output}]{assets/build time.txt}
+The table presents the query processing times for the provided collection. Additionally, we present the output of the Indexing program, indicating that it takes less than 1 minute and 20 seconds to construct the index previously discussed in the preceding sections.
 
-\section{files' size}
+Furthermore, we have included a histogram illustrating the distribution of execution times for run queries, comparing two methods: BMM and DAAT. This graphical representation allows for a visual comparison of the execution time disparities between the two query processing approaches.
+
+	\subsection{Queries' execution times}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
+			\hline
+			Algorithm & \normalfont\textbf{AVG [ms]} & \normalfont\textbf{STD DEV [ms]} & \normalfont\textbf{MAX [ms]} \\
+			\hline
+			DAAT & 25.88 & 19.69 & 78.68 \\
+			BMM & 6.67 & 6.29 & 42.48 \\
+			\hline
+		\end{tabular}
+		\caption{Execution times in milliseconds for different algorithms}
+		\label{tab:algorithm_times}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{assets/times_distrib.png}
+		\caption{Distribution of times}
+		\label{fig:time_distribution}
+	\end{figure}
+	
+	\subsection{Index's construction time}
+\lstinputlisting[caption={Indexing program's output: it takes less than 1 minute and 20 seconds to build it}, label={lst:example_output}]{assets/build time.txt}
+	
+\section{Files' size}
+The following table shows the file sizes presented in megabytes, segmented into N partitions (in our case, 5 partitions) for each data structures, including Document Index, Local Lexicon, and Posting List. Additionally, the Global Lexicon remains undivided, contributing to a total size of 1034.7 MiB.
+
+To provide a clearer visualization, we have included a tree diagram below where the divisions of megabytes among Document Index, Local Lexicon, Posting List, and Global Lexicon are depicted.
 
 \begin{table}[H]
 	\centering
