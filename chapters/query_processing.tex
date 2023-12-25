@@ -1,0 +1,50 @@
+\chapter{Query Processing}
+
+The query processing stage is a critical component of our search engine model. It faces the challenge of efficiently handling 
+sequences of terms within a query. In this chapter, we discuss the implementation choices for query processing, presenting two 
+distinct algorithms: \textit{Document At A Time (DAAT)} and \textit{Block-Max Maxscore (BMM)}.
+
+\section{DAAT}
+
+The \textit{Document At A Time} algorithm is our initial approach to query processing. This algorithm scans the posting lists of 
+query terms in parallel, allowing for conjunctive and disjunctive query processing.
+
+\subsection{Conjunctive Query}
+
+In a conjunctive query, the algorithm identifies documents that contain all the terms in the query. This involves scanning the 
+posting lists of each term concurrently and identifying documents that appear in all lists. Despite its simplicity, the DAAT 
+conjunctive query is not the most efficient, as it scans all posting lists even when unnecessary.
+
+\subsection{Disjunctive Query}
+
+The DAAT algorithm also supports disjunctive queries, where documents containing any of the query terms are retrieved. 
+This is achieved by scanning the posting lists and identifying documents that appear in at least one list. While versatile, 
+the efficiency of this approach can be improved.
+
+\section{BMM}
+
+The \textit{Block-Max Maxscore} algorithm is our second implementation for query processing. This algorithm introduces new 
+data structures saved on the disk to enhance efficiency.
+
+\subsection{Algorithm Overview}
+
+The BMM algorithm employs a block-max scoring strategy. It processes blocks of documents at a time, identifying the maximum 
+score within each block. By utilizing this approach, unnecessary scanning of all posting lists is minimized, leading to 
+improved efficiency.
+
+\subsection{New Data Structures}
+
+To optimize disk access and retrieval, we have introduced new data structures for storing intermediate results. These 
+structures enhance the speed of query processing by minimizing the need for repeated disk reads.
+% @todo: add data structures
+
+\section{Implementation Details}
+
+% PARAMETERS FOR BM25 PLEASE
+% SCORING FUNCTION PLEASE
+
+% @todo: add implementation details
+
+This chapter provides an overview of the query processing algorithms, shedding light on their strengths, weaknesses, and 
+implementation details. The next chapter will delve into performance evaluations and results obtained through experimentation 
+with our search engine model.
