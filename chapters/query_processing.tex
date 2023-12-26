@@ -18,8 +18,8 @@ matching documents.
 \subsection{Conjunctive Query}
 
 In a conjunctive query, the algorithm identifies documents that contain all the terms in the query. This involves scanning the 
-posting lists of each term concurrently and identifying documents that appear in all lists. Despite its simplicity, the DAAT 
-conjunctive query is not the most efficient, as it scans all posting lists even when unnecessary.
+posting lists of each term concurrently and identifying documents that appear in all lists. To further optimize the algorithm,
+we search the document in every posting list parallelly, if it's not present, we can skip its scoring and move to the next document.
 
 \section{BMM}
 
