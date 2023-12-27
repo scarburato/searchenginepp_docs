@@ -6,7 +6,7 @@
 \subsection{Logic}
 
 \paragraph{UTF-8} 
-The MSMARCO corpus contains several wrongly encoded documents, it seems their \textit{spider} wrongly interpreted certain documents as encoded in \texttt{latin1} --- a eight bit ASCII extension used by old Microsoft's software --- instead of \texttt{UTF-8} and then converted them in \texttt{UTF-8} interpreting their bytes as \texttt{UTF-8} data. To solve this issue we wrote a simple heuristic that tries to detect strange Unicode's entry-points that are likely the result of the processes; and a reverse encoding procedure that converts them back in their original \texttt{UTF-8} form. We didn't perform experiments so we cannot tell if this actually improves accuracy on the testing corpus.
+The MSMARCO corpus contains several wrongly encoded documents, it seems their \textit{spider} wrongly interpreted certain documents as encoded in \texttt{latin1} --- a eight bit ASCII extension used by old Microsoft's software --- instead of \texttt{UTF-8} and then converted them in \texttt{UTF-8} interpreting their bytes as \texttt{latin1} data. To solve this issue we wrote a simple heuristic that tries to detect strange Unicode's entry-points that are likely the result of the processes; and a reverse encoding procedure that converts them back in their original \texttt{UTF-8} form. We didn't perform experiments so we cannot tell if this actually improves accuracy on the testing corpus.
 
 \paragraph{Punctuation and splitting}
 Our implementation takes a very simplistic approach to punctuation handling, that is all known western punctuation is removed and replaced with spaces, you can see the punctuation handled by the program in the source file \texttt{normalizer/PunctuationRemover.cpp}.
