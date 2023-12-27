@@ -129,5 +129,5 @@ To access the document's number we have to pay another I/O access, but that's no
 \paragraph{}
 For simplicity's sake, we do not use caches, even though they might've improved performance; however, since we memory-map all files --- through the use of the POSIX system call \texttt{mmap()}, --- we have some sort of \textit{implicit cache} handled directly by the Kernel, as the most used disk pages are likely to be kept in system memory as the process progresses in its execution.
 
-This is particularly advantageous when access the lexica and the document indices; especially for the latter, we can truly exploit this mechanism to obtain real $O(1)$ access times.
+This is particularly advantageous when accessing the lexica and the document indices; especially for the latter, we can truly exploit this mechanism to obtain real $O(1)$ access times.
 
