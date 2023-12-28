@@ -15,7 +15,7 @@ The following table \ref{tab:metric_comparison} makes comparisons of our engine'
 	\centering
 	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
 		\hline
-		Metric & \normalfont\textbf{Ours} & \normalfont\textbf{Anserini} & \normalfont\textbf{Chang's} \\
+		Metric & \normalfont\textbf{SEPP} & \normalfont\textbf{Anserini} & \normalfont\textbf{Chang's} \\
 		\hline
 		mAP & 0.1982 & 0.1942 & 0.0794 \\
 		RR & 0.8110 & 0.8215 & 0.7285 \\
@@ -91,3 +91,14 @@ The following table shows the file sizes presented in megabytes, divided int the
 To provide a clearer visualization, we have included a tree diagram below where the files' structure is depicted.
 
 \lstinputlisting[caption={Files tree}, label={lst:tree}]{assets/files sizes.txt}
+
+
+\section{Limitations}
+% DAAT non ottimizzato per le query conjunctive
+SEPP has some drawbacks. One issue is with our word normalization algorithm, our search engine's use of it doesn't handle synonyms or related terms well. Basically, every word is treated separately, so if your search doesn't exactly match the words in the documents, BM25 might not score them accurately for relevance.
+
+Our search engine's way of breaking down text into smaller bits also has its problems. It just chops off punctuation without thinking, which means we might lose important stuff like acronyms, hashtags, dates, or prices. Plus, it doesn't recognize phrases made up of multiple words. On top of that, SEPP doesn't catch spelling mistakes or different word forms.
+
+\paragraph{Possible solutions}
+SEPP's drawbacks include word normalization issues — enhance it for synonyms and related terms. Modify text tokenization to retain punctuation for acronyms, hashtags, and multiword expressions. Implement spell-check and word form recognition for improved flexibility. Utilize NLP, user feedback, and BM25 adjustments for more accurate search outcomes. For example: experiment with BM25 parameters to optimize the search engine's scoring mechanism. Fine-tuning these parameters could improve relevance scoring, even when search queries don't precisely match document words.
+
