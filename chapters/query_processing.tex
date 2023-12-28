@@ -77,7 +77,8 @@ In this repository, the authors performed a grid search to find the optimal para
 	s(q,d) = 
 	\sum_{t \in d \cap q}
 	\dfrac{\mathtt{tf}_{t,d}}{
-		k_1 \cdot \left( (1 - b) + b \dfrac{\mathtt{dl}_d}{\mathtt{avgdl}} + \mathtt{tf}_{t,d} \right)
+		k_1 \cdot \left( (1 - b) + b \dfrac{\mathtt{dl}_d}{\mathtt{avgdl}}
+		\right) + \mathtt{tf}_{t,d}
 	}
 	\cdot \log_2\left(\dfrac{|D|}{n_t}\right)
 \end{equation}
