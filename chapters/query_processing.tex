@@ -6,60 +6,83 @@ distinct algorithms: \textit{Document At A Time (DAAT)} and \textit{Block-Max Ma
 
 \section{DAAT}
 
+\paragraph{}
 The \textit{Document At A Time} algorithm is our initial approach to query processing. This algorithm scans the posting lists of 
 query terms in parallel, allowing for conjunctive and disjunctive query processing.
 
-\subsection{Disjunctive Query}
-
+\paragraph{Disjunctive mode}
 The algorithm for disjunctive queries processes a query by scanning posting lists in parallel. 
 The algorithm iterates through the lists, calculating relevance scores for documents, and outputs the final set of 
 matching documents.
 
-\subsection{Conjunctive Query}
-
+\paragraph{Conjunctive mode}
 In a conjunctive query, the algorithm identifies documents that contain all the terms in the query. This involves scanning the 
 posting lists of each term concurrently and identifying documents that appear in all lists. To further optimize the algorithm,
 we search the document in every posting list parallelly, if it's not present, we can skip its scoring and move to the next document.
 
 \section{BMM}
 
+\paragraph{}
 The \textit{Block-Max Maxscore} algorithm is our second implementation for query processing. This algorithm introduces new 
 data structures saved on the disk to enhance efficiency.
 
-\subsection{Algorithm Overview}
-
+\paragraph{Overview}
 The Block-Max Maxscore (BMM) algorithm processes queries by dividing posting lists into blocks and identifying the maximum score 
 within each block. It avoids scanning the entire posting lists, focusing on blocks likely to contain relevant documents. 
 By efficiently processing blocks, BMM minimizes unnecessary computations, making it more time-effective than 
 Document At A Time (DAAT) for certain scenarios, particularly when dealing with large datasets.
 
-\subsection{New Data Structures}
-
+\paragraph{New Data Structures}
 To make the BMM algorithm possible, after the creation of the inverted index, we scan the whole index and calculate some additional values.
 We call these values \textit{sigmas} and \textit{sigma blocks}. The sigmas are the maximum scores of each posting list, 
 while the sigma blocks are the maximum scores relative to each block of the posting list.
-Along with the sigmas and sigma blocks, we also save the positions of the start of each block inside a new data structure called skip\_pointers.
+Along with the sigmas and sigma blocks, we also save the positions of the start of each block inside a new data structure called \texttt{skip\_pointers}.
 These are used to quickly jump to the start of each block, without having to scan the whole posting list. 
 
 \section{Scoring Functions}
 
+\paragraph{}
 We decided to use two types of scoring function.
+
+\paragraph{}
+Both formulae use a common term, the \textit{inverted document frequency} --- that is $\log_2\frac{|D|}{n_t}$, --- this common term is computed only once and stored to avoid performing the same computation over and over.
+
+\paragraph{}
+Both formulae make use of logarithms, a heavy operation on the \textit{FPU}, to try to speed-up the computation we implemented an integer version of such operation that relies only on the \textit{ALU}; however, empirically we saw that execution times do not change by much when using implementation and we decided to prefer the floating-point version for greater accuracy. 
 
 \subsection{TFIDF}
 
+\paragraph{}
 The first scoring function is the simpler and faster \textit{Term Frequency Inverted Document Frequency (TFIDF)}.
 Although this scoring function is simpler, it's not really effective in terms of precision value, so it's implemented only for completition
 purposes.
 
+\begin{equation}
+	s(q,d) = \sum_{t \in d \cap q}\left(1 + \log_2(\mathtt{tf}_{t,d})\right) \cdot \log_2\left(\dfrac{|D|}{n_t}\right)
+\end{equation}
+
 \subsection{BM25}
 
+\paragraph{}
 The second scoring function is the more sophisticated and widely used \textit{BM25} (Best Matching 25) algorithm. 
 \textit{BM25} takes into account term frequency, document length, and the inverse document frequency, offering a more nuanced measure of 
 document relevance compared to TFIDF.
 
-The parameters \(k1\) and \(b\) were taken by the following 
+\paragraph{Parameters}
+The parameters $k_1$ and $b$ were taken by the following 
 \href{https://github.com/castorini/pyserini/blob/master/docs/experiments-msmarco-passage.md}{github repository}. 
 In this repository, the authors performed a grid search to find the optimal parameters for BM25.
+
+\begin{equation}
+	s(q,d) = 
+	\sum_{t \in d \cap q}
+	\dfrac{\mathtt{tf}_{t,d}}{
+		k_1 \cdot \left( (1 - b) + b \dfrac{\mathtt{dl}_d}{\mathtt{avgdl}} + \mathtt{tf}_{t,d} \right)
+	}
+	\cdot \log_2\left(\dfrac{|D|}{n_t}\right)
+\end{equation}
+
+We set $k_1 = 0.82$ and $b = 0.68$.
 
 % \section{How to use}
 % @todo: add usage details

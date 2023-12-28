@@ -15,16 +15,16 @@ The following table \ref{tab:metric_comparison} makes comparisons of our engine'
 	\centering
 	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
 		\hline
-		Metric & \normalfont\textbf{SEPP} & \normalfont\textbf{Anserini} & \normalfont\textbf{Chang's} \\
+		Metric & \normalfont\textbf{SEPP TFIDF} & \normalfont\textbf{SEPP BM25} & \normalfont\textbf{Anserini BM25}\\ % & \normalfont\textbf{Chang's} \\
 		\hline
-		mAP & 0.1982 & 0.1942 & 0.0794 \\
-		RR & 0.8110 & 0.8215 & 0.7285 \\
-		ndcg & 0.3376 & 0.3364 & 0.1681\\
-		ndcg@10 & 0.4750 & 0.4876 & 0.4075 \\
-		ndcg@20 & 0.4705 & 0.4705 & - \\
-		set P & 0.4815 & 0.4667  & 0.5163 \\
-		set R & 0.2600 & 0.2496 & 0.0987 \\
-		set F & 0.2781 & 0.2670 & 0.1437 \\
+		mAP & 0.1189 & 0.1982 & 0.1942 \\%& 0.0794 \\
+		RR & 0.6527 & 0.8110 & 0.8215\\ %& 0.7285 \\
+		%ndcg & 0.2362 & 0.3376 & 0.3364 \\%& 0.1681\\
+		ndcg@10 & 0.3538 & 0.4750 & 0.4876 \\%& 0.4075 \\
+		ndcg@20 & 0.3351 & 0.4705 & 0.4705\\ %& - \\
+		set P & 0.3435 & 0.4815 & 0.4667 \\ %& 0.5163 \\
+		set R & 0.1786 & 0.2600 & 0.2496\\ %& 0.0987 \\
+		set F & 0.1902 & 0.2781 & 0.2670 \\%& 0.1437 \\
 		\hline
 	\end{tabular}
 	\caption{comparison of our project and Anserini's}
@@ -34,31 +34,33 @@ The following table \ref{tab:metric_comparison} makes comparisons of our engine'
 \section{Time statistics}
 
 \paragraph{}
-The table presents the query processing times for the provided collection. 
+The table presents the query processing times for the provided collection. All measurements were carried out using a single thread.
 
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
+		\hline
+		Algorithm & \normalfont\textbf{AVG [ms]} & \normalfont\textbf{STD DEV [ms]} & \normalfont\textbf{MAX [ms]} & \normalfont\textbf{[query/s]} \\
+		\hline
+		DAAT & 25.88 & 19.69 & 78.68 & 51 \\
+		BMM & 6.67 & 6.29 & 42.48 & 149 \\
+		\hline
+		\multicolumn{4}{|l|}{Anserini} & 256 \\
+		\hline
+	\end{tabular}
+	\caption{Execution figures for different algorithms, $k=20$}
+	\label{tab:algorithm_times}
+\end{table}
+
+\paragraph{}
 Furthermore, we have included a histogram illustrating the distribution of execution times for run queries, comparing two methods: BMM and DAAT. This graphical representation allows for a visual comparison of the execution time distribution between the two query processing approaches.
 
-\subsection{Queries' execution times}
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|l|>{\ttfamily}r|>{\ttfamily}r|>{\ttfamily}r|}
-			\hline
-			Algorithm & \normalfont\textbf{AVG [ms]} & \normalfont\textbf{STD DEV [ms]} & \normalfont\textbf{MAX [ms]} \\
-			\hline
-			DAAT & 25.88 & 19.69 & 78.68 \\
-			BMM & 6.67 & 6.29 & 42.48 \\
-			\hline
-		\end{tabular}
-		\caption{Execution times in milliseconds for different algorithms}
-		\label{tab:algorithm_times}
-	\end{table}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=1\textwidth]{assets/times_distrib.png}
-		\caption{Distribution of times}
-		\label{fig:time_distribution}
-	\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{assets/times_distrib.png}
+	\caption{Distribution of times}
+	\label{fig:time_distribution}
+\end{figure}
 	
 \subsection{Index's construction time}
 \lstinputlisting[caption={Indexing program's output: it takes less than 1 minute and 20 seconds to build it}, label={lst:example_output}]{assets/build time.txt}
@@ -95,10 +97,11 @@ To provide a clearer visualization, we have included a tree diagram below where 
 
 \section{Limitations}
 % DAAT non ottimizzato per le query conjunctive
+\paragraph{}
 SEPP has some drawbacks. One issue is with our word normalization algorithm, our search engine's use of it doesn't handle synonyms or related terms well. Basically, every word is treated separately, so if your search doesn't exactly match the words in the documents, BM25 might not score them accurately for relevance.
 
-Our search engine's way of breaking down text into smaller bits also has its problems. It just chops off punctuation without thinking, which means we might lose important stuff like acronyms, hashtags, dates, or prices. Plus, it doesn't recognize phrases made up of multiple words. On top of that, SEPP doesn't catch spelling mistakes or different word forms.
+Our search engine's tokenizer also has its problems, as it blindly removes all punctuation, which means we might lose important stuff like acronyms, hashtags, dates or prices. Furthermore, it doesn't recognize phrases made up of multiple words. On top of that, SEPP doesn't catch spelling mistakes or different word forms.
 
 \paragraph{Possible solutions}
-SEPP's drawbacks include word normalization issues — enhance it for synonyms and related terms. Modify text tokenization to retain punctuation for acronyms, hashtags, and multiword expressions. Implement spell-check and word form recognition for improved flexibility. Utilize NLP, user feedback, and BM25 adjustments for more accurate search outcomes. For example: experiment with BM25 parameters to optimize the search engine's scoring mechanism. Fine-tuning these parameters could improve relevance scoring, even when search queries don't precisely match document words.
+SEPP's drawbacks include word normalization issues --- enhance it for synonyms and related terms. Modify text tokenization to retain punctuation for acronyms, hashtags, and multiword expressions. Implement spell-check and word form recognition for improved flexibility. Utilize NLP, user feedback, and BM25 adjustments for more accurate search outcomes. For example: experiment with BM25 parameters to optimize the search engine's scoring mechanism. Fine-tuning these parameters could improve relevance scoring, even when search queries don't precisely match document words.
 
